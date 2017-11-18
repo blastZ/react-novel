@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+}
+
+.decrease-icon {
+  font-size: 30px;
+  margin: 0 5px;
+}
+
+.increase-icon {
+  font-size: 30px;
+  margin: 0 5px;
+}
+
+.animation-popup {
+  animation-name: popup;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+}
+
+.background-circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+@keyframes popup {
+  0% {
+    display: none;
+    opacity: 0
+  }
+  100% {
+    display: flex;
+    opacity: 1
+  }
+}
