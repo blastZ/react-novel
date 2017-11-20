@@ -7,6 +7,8 @@ import MenuIcon from 'react-icons/lib/md/menu';
 import SettingIcon from 'react-icons/lib/md/settings';
 import DecreaseIcon from 'react-icons/lib/md/remove';
 import IncreaseIcon from 'react-icons/lib/md/add';
+import BackIcon from 'react-icons/lib/md/keyboard-arrow-left';
+import HomeIcon from 'react-icons/lib/md/home';
 
 class ChapterPage extends Component {
   state = {
@@ -14,7 +16,8 @@ class ChapterPage extends Component {
     letterSpacing: '0.2em',
     lineHeight: '180%',
     margin: '15px',
-    showSettingView: true,
+    showSettingView: false,
+    showNavView: false,
     colorList: [
       {bkColor: 'white', fontColor: 'black'},
       {bkColor: '#080C10', fontColor: '#84888E'},
@@ -24,6 +27,12 @@ class ChapterPage extends Component {
     ],
     bkColor: 'white',
     fontColor: 'black',
+  }
+
+  shouldShowNavView = () => {
+    this.setState({
+      showNavView: !this.state.showNavView
+    })
   }
 
   shouldShowSettingView = () => {
@@ -121,20 +130,34 @@ class ChapterPage extends Component {
     }
   }
 
+  getChapter = (chapter, index) => {
+    this.props.history.push(`/${this.props.match.params.bookId}/${chapter.href}`);
+    this.props.dispatch(initChapter());
+    this.props.dispatch(getChapter(this.props.match.params.bookId, chapter.href));
+    this.props.dispatch(setChapterIndex(index));
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        background: `${this.state.bkColor}`,
-        color: `${this.state.fontColor}`,
-        width: '900px',
-        maxWidth: '100%',
-        margin: '0 auto',
-        padding: '36px 0px',
-        fontSize: `${this.state.fontSize}`,
-        letterSpacing: `${this.state.letterSpacing}`,
-        lineHeight: `${this.state.lineHeight}`}}>
+      <div>
+        <div style={{position: 'fixed', top: '0px', left: '0px', zIndex: '300', width: '60%', height: '100vh',
+          background: 'black',
+          color: 'white',
+          display: `${this.state.showNavView ? 'flex' : 'none'}`, flexDirection: 'column'}}
+          className="slide-from-left">
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #a2a2a2', minHeight: '44px'}}>
+            <HomeIcon onClick={() => {this.props.history.push('/')}} style={{fontSize: '28px', padding: '8px'}} />
+            <BackIcon onClick={this.shouldShowNavView} style={{fontSize: '40px'}} />
+          </div>
+          <div style={{overflowY: 'auto'}}>
+            <ul style={{listStyle: 'none', paddingLeft: '20px'}}>
+              {this.props.chapterList.map((chapter, index) => (
+                <li key={chapter.name} style={{marginBottom: '6px'}} onClick={() => this.getChapter(chapter, index)}>{chapter.name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
         <div style={{position: 'fixed', top: '45px', left: '0px',
           zIndex: '300', width: '100%', height: '240px',
           background: 'rgba(0,0,0, 0.5)',
@@ -172,41 +195,59 @@ class ChapterPage extends Component {
             </div>
           </div>
         </div>
-        {this.props.chapter.map((str, index) => (
-          index !== 0 && str.trim() !== '' && <p key={str + index} style={{margin: `${this.state.margin} 0px`, padding: '0px 8px'}}>{str}</p>
-        ))}
-        {this.props.chapter.length > 0 &&
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', padding: '20px'}}>
-            <RaisedButton
-              onClick={this.preChapter}
-              label="上一页" />
-            <RaisedButton
-              onClick={this.nextChapter}
-              label="下一页" />
-          </div>}
         <div style={{
-          position: 'fixed',
-          zIndex: '100',
-          left: '0px',
-          top: '0px',
-          width: '100%',
-          height: '45px',
-          background: 'rgba(0,0,0,0.6)',
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          fontSize: '18px'}}>
-          <MenuIcon style={{
-            color: 'white',
-            fontSize: '1.5em',
-            marginLeft: '5px'
-          }} />
-          <SettingIcon style={{
-            color: 'white',
-            fontSize: '1.4em',
-            marginRight: '5px'
-          }}
-            onClick={this.shouldShowSettingView}/>
+          flexDirection: 'column',
+          background: `${this.state.bkColor}`,
+          color: `${this.state.fontColor}`,
+          width: '900px',
+          maxWidth: '100%',
+          margin: '0 auto',
+          padding: '36px 0px',
+          fontSize: `${this.state.fontSize}`,
+          letterSpacing: `${this.state.letterSpacing}`,
+          lineHeight: `${this.state.lineHeight}`,
+          overflowY: 'auto'}}>
+          <h2 style={{textAlign: 'center'}}>{this.props.chapterName}</h2>
+          <div>
+            {this.props.chapter.map((str, index) => (
+              index !== 0 && str.trim() !== '' && <p key={str + index} style={{margin: `${this.state.margin} 0px`, padding: '0px 8px'}}>{str}</p>
+            ))}
+          </div>
+          {this.props.chapter.length > 0 &&
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', padding: '20px'}}>
+              <RaisedButton
+                onClick={this.preChapter}
+                label="上一页" />
+              <RaisedButton
+                onClick={this.nextChapter}
+                label="下一页" />
+            </div>}
+          <div style={{
+            position: 'fixed',
+            zIndex: '100',
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '45px',
+            background: 'rgba(0,0,0,0.6)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: '18px'}}>
+            <MenuIcon style={{
+              color: 'white',
+              fontSize: '1.5em',
+              marginLeft: '5px'
+            }}
+              onClick={this.shouldShowNavView}/>
+            <SettingIcon style={{
+              color: 'white',
+              fontSize: '1.4em',
+              marginRight: '5px'
+            }}
+              onClick={this.shouldShowSettingView}/>
+          </div>
         </div>
       </div>
     )
@@ -216,7 +257,8 @@ class ChapterPage extends Component {
 const mapStateToProps = ({ appReducer }) => ({
   chapterList: appReducer.chapterList,
   chapterIndex: appReducer.chapterIndex,
-  chapter: appReducer.chapter
+  chapter: appReducer.chapter,
+  chapterName: appReducer.chapterName
 })
 
 export default withRouter(connect(mapStateToProps)(ChapterPage));

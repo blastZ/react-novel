@@ -1,13 +1,16 @@
-import { GET_CHAPTER_LIST, INIT_STATE, SET_CHAPTER_INDEX, GET_CHAPTER, INIT_CHAPTER } from '../actions/app_action';
+import { GET_CHAPTER_LIST, INIT_STATE, SET_CHAPTER_INDEX, GET_CHAPTER, INIT_CHAPTER,
+         SEARCH_BOOK } from '../actions/app_action';
 
 const initState = {
   chapterList: [],
   chapter: [],
   chapterIndex: 0,
+  chapterName: '',
+  resultList: [],
 }
 
 const appReducer = (state=initState, action) => {
-  const { chapterList, chapterIndex, chapter } = action;
+  const { chapterList, chapterIndex, chapter, chapterName, resultList } = action;
   switch (action.type) {
     case GET_CHAPTER_LIST: {
       return {
@@ -31,13 +34,21 @@ const appReducer = (state=initState, action) => {
     case GET_CHAPTER: {
       return {
         ...state,
-        chapter
+        chapter,
+        chapterName
       }
     }
     case INIT_CHAPTER: {
       return {
         ...state,
-        chapter: []
+        chapter: [],
+        chapterName: ''
+      }
+    }
+    case SEARCH_BOOK: {
+      return {
+        ...state,
+        resultList
       }
     }
     default: return state;
