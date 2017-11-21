@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body, html, #root {
   margin: 0;
   height: 100%;
@@ -5,6 +9,22 @@ body, html, #root {
 
 h1, h2, h3, h4, h5 {
   margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.bg-1 {
+  background: url('../imgs/bg1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .decrease-icon {
@@ -15,6 +35,21 @@ h1, h2, h3, h4, h5 {
 .increase-icon {
   font-size: 30px;
   margin: 0 5px;
+}
+
+.custom-button {
+  width: 87px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-weight: bold;
+  margin: 0 auto;
+  margin-top: 18px;
+  letter-spacing: 2px;
+  outline: none;
 }
 
 .animation-popup {

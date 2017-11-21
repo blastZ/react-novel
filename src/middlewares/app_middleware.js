@@ -3,10 +3,6 @@ import { GET_CHAPTER_LIST, GET_CHAPTER, SEARCH_BOOK } from '../actions/app_actio
 const defaultURL = 'http://localhost:5001';
 //const defaultURL = 'http://101.132.151.144:5001';
 
-const handleChapterStr = (chapterStr) => {
-    return chapterStr.split('<br>')
-}
-
 const appMiddleware = store => next => action => {
   const { type, bookId, chapterId, searchName } = action;
   if(type === GET_CHAPTER_LIST) {
@@ -15,6 +11,7 @@ const appMiddleware = store => next => action => {
       .then((result) => {
         next({
           type,
+          bookInfo: result.bookInfo,
           chapterList: result.chapterList
         })
       })

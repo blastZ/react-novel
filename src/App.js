@@ -7,9 +7,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux';
 import SearchPage from './search/SearchPage';
 
- const defaultURL = 'http://localhost:5001';
-//const defaultURL = 'http://101.132.151.144:5001';
-
 class App extends Component {
   componentWillMount() {
       // fetch(`${defaultURL}`)

@@ -1,32 +1,75 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { searchBook } from '../actions/app_action';
+import TextField from 'material-ui/TextField';
 
 class SearchPage extends Component {
+  state = {
+    searchName: ''
+  }
+
   componentWillMount() {
+    this.setState({
+      searchName: this.props.match.params.searchName
+    })
     this.props.dispatch(searchBook(this.props.match.params.searchName));
+  }
+
+  handleSearchName = (e) => {
+    this.setState({
+      searchName: e.target.value.trim()
+    }, () => {
+      if(this.state.searchName !== '') {
+        this.props.history.replace(`/search/${this.state.searchName}`)
+        this.props.dispatch(searchBook(this.state.searchName));
+      }
+    })
+  }
+
+  toBookPage = (bookId) => {
+    this.props.history.push(`/${bookId}`);
   }
 
   render() {
     return (
-      <div>
+      <div style={{width: '800px', margin: '0 auto', maxWidth: '100%'}}>
+        <div style={{display: 'flex', justifyContent: 'center', margin: '15px 0px'}}>
+          <TextField
+            id="search-textfield"
+            value={this.state.searchName}
+            onChange={this.handleSearchName}
+            floatingLabelStyle={{
+              fontSize: '15px'
+            }}
+            inputStyle={{
+              fontSize: '15px',
+              letterSpacing: '1px',
+              paddingLeft: '5px'
+            }}
+            hintStyle={{
+              paddingLeft: '10px',
+              fontSize: '15px'
+            }}
+            style={{
+              width: '90%'
+            }} />
+        </div>
         {this.props.resultList.map((book) => (
-          <div style={{display: 'flex', padding: '15px 0px'}}>
-            <div style={{width: '40%', display: 'flex', alignItems: 'flex-start', justifyContent: 'center'}}>
-              <img src={book.url} style={{maxWidth: '100%', maxWidth: '120px'}}/>
+          <div key={book.href} style={{display: 'flex', padding: '15px 20px'}}>
+            <div style={{width: '135px', display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', paddingRight: '15px', flexShrink: '0'}}>
+              <img alt={`${book.name}封面图片`} onClick={() => this.toBookPage(book.href)} src={book.url} style={{maxWidth: '100%', width: '120px'}}/>
             </div>
-            <div style={{width: '60%', display: 'flex', flexDirection: 'column', padding: '0px 5px'}}>
-              <h3>{book.name}</h3>
+            <div style={{display: 'flex', flexDirection: 'column', padding: '0px 5px', justifyContent: 'space-between'}}>
+              <h3><span onClick={() => this.toBookPage(book.href)}>{book.name}</span></h3>
               <p style={{fontSize: '14px', margin: '7px 0px'}}>{book.description}</p>
-              <div>
-                <h5>{book.author}</h5>
-                <h5>{book.updateTime}</h5>
+              <div style={{fontSize: '10px'}}>
+                <div><b>作者:</b>&nbsp;{book.author}</div>
               </div>
             </div>
           </div>
         ))}
+        <div style={{fontSize: '10px', color: 'gray', textAlign: 'center', padding: '10px', marginTop: '50px'}}>©Forever, <em>developed by handsome boy blastz</em></div>
       </div>
     )
   }

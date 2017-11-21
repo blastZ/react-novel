@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 class HomePage extends Component {
   state = {
-    searchName: ''
+    searchName: '',
+    bgName: 'bg-1',
   }
 
   handleSearchName = (e) => {
@@ -17,21 +16,34 @@ class HomePage extends Component {
   }
 
   searchBook = () => {
-    this.props.history.push(`/search/${this.state.searchName}`);
+    if(this.state.searchName === '') {
+      window.alert('小说名不能为空');
+    } else {
+      this.props.history.push(`/search/${this.state.searchName}`);
+    }
   }
 
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '800px', maxWidth: '100%', height: '100%', margin: '0 auto', justifyContent: 'center'}}>
+      <div className={`${this.state.bgName}`} style={{display: 'flex', flexDirection: 'column', width: '800px', maxWidth: '100%', height: '100%', margin: '0 auto', justifyContent: 'center'}}>
         <TextField
           floatingLabelText="请输入小说名(宁可少字不要错字)"
           value={this.state.searchName}
           onChange={this.handleSearchName}
+          underlineFocusStyle={{
+            borderColor: 'rgb(255,255,255)'
+          }}
+          underlineStyle={{
+            borderColor: 'rgb(255,255,255)'
+          }}
           floatingLabelStyle={{
-            fontSize: '15px'
+            letterSpacing: '1px',
+            fontSize: '15px',
+            color: 'white'
           }}
           inputStyle={{
-            fontSize: '15px'
+            fontSize: '15px',
+            color: 'white'
           }}
           hintStyle={{
             paddingLeft: '10px',
@@ -39,19 +51,9 @@ class HomePage extends Component {
           }}
           style={{
             margin: '0 auto',
-            width: '70%'
+            width: '70%',
           }} />
-          <button style={{
-            width: '80px',
-            height: '35px',
-            padding: '5px',
-            borderRadius: '25px',
-            border: '2px solid black',
-            background: 'black',
-            color: 'white',
-            fontWeight: 'bold',
-            margin: '0 auto'
-          }} onClick={this.searchBook}>搜索</button>
+          <button className="custom-button" onClick={this.searchBook}>搜索</button>
       </div>
     )
   }

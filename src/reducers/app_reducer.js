@@ -7,15 +7,24 @@ const initState = {
   chapterIndex: 0,
   chapterName: '',
   resultList: [],
+  bookInfo: {
+    url: '',
+    name: '',
+    author: '',
+    updateTime: '',
+    latestChapter: '',
+    description: ''
+  },
 }
 
 const appReducer = (state=initState, action) => {
-  const { chapterList, chapterIndex, chapter, chapterName, resultList } = action;
+  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo } = action;
   switch (action.type) {
     case GET_CHAPTER_LIST: {
       return {
         ...state,
-        chapterList
+        chapterList,
+        bookInfo
       }
     }
     case INIT_STATE: {
@@ -23,6 +32,14 @@ const appReducer = (state=initState, action) => {
         ...state,
         chapterList: [],
         chapterIndex: 0,
+        bookInfo: {
+          url: '',
+          name: '',
+          author: '',
+          updateTime: '',
+          latestChapter: '',
+          description: ''
+        },
       }
     }
     case SET_CHAPTER_INDEX: {

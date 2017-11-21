@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
-import { setChapterIndex, getChapter, initChapter } from '../actions/app_action';
+import { setChapterIndex, getChapter, initChapter, getChapterList } from '../actions/app_action';
 import MenuIcon from 'react-icons/lib/md/menu';
 import SettingIcon from 'react-icons/lib/md/settings';
 import DecreaseIcon from 'react-icons/lib/md/remove';
@@ -42,6 +42,7 @@ class ChapterPage extends Component {
   }
 
   componentWillMount() {
+    if(this.props.chapterList.length === 0) this.props.dispatch(getChapterList(this.props.match.params.bookId));
     this.props.dispatch(getChapter(this.props.match.params.bookId, this.props.match.params.chapterId));
   }
 
@@ -147,7 +148,7 @@ class ChapterPage extends Component {
           display: `${this.state.showNavView ? 'flex' : 'none'}`, flexDirection: 'column'}}
           className="slide-from-left">
           <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #a2a2a2', minHeight: '44px'}}>
-            <HomeIcon onClick={() => {this.props.history.push('/')}} style={{fontSize: '28px', padding: '8px'}} />
+            <HomeIcon onClick={() => {this.props.history.push('/')}} style={{fontSize: '25px', marginLeft: '5px'}} />
             <BackIcon onClick={this.shouldShowNavView} style={{fontSize: '40px'}} />
           </div>
           <div style={{overflowY: 'auto'}}>
@@ -203,12 +204,12 @@ class ChapterPage extends Component {
           width: '900px',
           maxWidth: '100%',
           margin: '0 auto',
-          padding: '36px 0px',
+          padding: '60px 0px',
           fontSize: `${this.state.fontSize}`,
           letterSpacing: `${this.state.letterSpacing}`,
           lineHeight: `${this.state.lineHeight}`,
           overflowY: 'auto'}}>
-          <h2 style={{textAlign: 'center'}}>{this.props.chapterName}</h2>
+          <h2 style={{textAlign: 'center', marginBottom: '18px'}}>{this.props.chapterName}</h2>
           <div>
             {this.props.chapter.map((str, index) => (
               index !== 0 && str.trim() !== '' && <p key={str + index} style={{margin: `${this.state.margin} 0px`, padding: '0px 8px'}}>{str}</p>
