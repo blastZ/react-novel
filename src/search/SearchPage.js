@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from 'material-ui/styles';
 import { searchBook } from '../actions/app_action';
 import TextField from 'material-ui/TextField';
 
