@@ -32,7 +32,7 @@ class BookPage extends Component {
     //   chapterPageList.push(list);
     // }
     return (
-      <div style={{display: 'flex', flexDirection: 'column', width: '800px', maxWidth: '100%', margin: '0 auto', height: '100%'}}>
+      <div style={{display: 'flex', flexDirection: 'column', width: '800px', maxWidth: '100%', margin: '0 auto', height: '100%', justifyContent: 'space-between'}}>
         <div className="flex" style={{alignItems: 'center', justifyContent: 'space-between', height: '40px', background: 'rgba(0,0,0,0.7)', flexShrink: '0', color: 'white'}}>
           <BackIcon onClick={() => this.props.history.goBack()} style={{fontSize: '37px'}} />
           <OptionIcon style={{fontSize: '28px'}} />
@@ -53,7 +53,7 @@ class BookPage extends Component {
             <p>{bookInfo.description}</p>
           </div>
         </div>}
-        <div style={{paddingLeft: '10px', display: 'flex', flexDirection: 'column', overflowY: 'auto'}}>
+        <div style={{paddingLeft: '10px', display: 'flex', flexDirection: 'column', overflowY: 'auto', flexShrink: '0', height: '800px', width: '67%', overflowX: 'hidden', whiteSpace: 'nowrap'}}>
           {chapterList.map((chapter, index) => (
             <a key={chapter.name + chapter.href} onClick={() => this.toChapter(chapter, index)}>{chapter.name}</a>
           ))}

@@ -3,7 +3,6 @@ import { withRouter, Route, Switch } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import BookPage from './book/BookPage';
 import ChapterPage from './book/ChapterPage';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { connect } from 'react-redux';
 import SearchPage from './search/SearchPage';
 
@@ -22,7 +21,7 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
+      <div style={{width: '100%', height: '100%'}}>
         <Switch>
           <Route exact path="/" render={() => (
             <HomePage />
@@ -37,7 +36,7 @@ class App extends Component {
             <ChapterPage />
           )} />
         </Switch>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }

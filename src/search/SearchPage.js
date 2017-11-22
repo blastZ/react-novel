@@ -36,21 +36,8 @@ class SearchPage extends Component {
       <div style={{width: '800px', margin: '0 auto', maxWidth: '100%'}}>
         <div style={{display: 'flex', justifyContent: 'center', margin: '15px 0px'}}>
           <TextField
-            id="search-textfield"
             value={this.state.searchName}
             onChange={this.handleSearchName}
-            floatingLabelStyle={{
-              fontSize: '15px'
-            }}
-            inputStyle={{
-              fontSize: '15px',
-              letterSpacing: '1px',
-              paddingLeft: '5px'
-            }}
-            hintStyle={{
-              paddingLeft: '10px',
-              fontSize: '15px'
-            }}
             style={{
               width: '90%'
             }} />

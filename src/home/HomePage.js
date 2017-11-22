@@ -27,28 +27,8 @@ class HomePage extends Component {
     return (
       <div className={`${this.state.bgName}`} style={{display: 'flex', flexDirection: 'column', width: '800px', maxWidth: '100%', height: '100%', margin: '0 auto', justifyContent: 'center'}}>
         <TextField
-          floatingLabelText="请输入小说名(宁可少字不要错字)"
           value={this.state.searchName}
           onChange={this.handleSearchName}
-          underlineFocusStyle={{
-            borderColor: 'rgb(255,255,255)'
-          }}
-          underlineStyle={{
-            borderColor: 'rgb(255,255,255)'
-          }}
-          floatingLabelStyle={{
-            letterSpacing: '1px',
-            fontSize: '15px',
-            color: 'white'
-          }}
-          inputStyle={{
-            fontSize: '15px',
-            color: 'white'
-          }}
-          hintStyle={{
-            paddingLeft: '10px',
-            fontSize: '15px'
-          }}
           style={{
             margin: '0 auto',
             width: '70%',

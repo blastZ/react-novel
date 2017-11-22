@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { setChapterIndex, getChapter, initChapter, getChapterList } from '../actions/app_action';
 import MenuIcon from 'react-icons/lib/md/menu';
@@ -217,12 +217,8 @@ class ChapterPage extends Component {
           </div>
           {this.props.chapter.length > 0 &&
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', padding: '20px'}}>
-              <RaisedButton
-                onClick={this.preChapter}
-                label="上一页" />
-              <RaisedButton
-                onClick={this.nextChapter}
-                label="下一页" />
+              <Button onClick={this.preChapter}>上一页</Button>
+              <Button onClick={this.nextChapter}>下一页</Button>
             </div>}
           <div style={{
             position: 'fixed',
