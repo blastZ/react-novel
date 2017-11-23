@@ -34,7 +34,7 @@ class SearchPage extends Component {
 
   render() {
     return (
-      <div style={{width: '800px', margin: '0 auto', maxWidth: '100%'}}>
+      <div style={{width: '800px', margin: '0 auto', maxWidth: '100%', marginTop: '64px', paddingTop: '16px'}}>
         <div style={{display: 'flex', justifyContent: 'center', margin: '15px 0px'}}>
           <TextField
             value={this.state.searchName}

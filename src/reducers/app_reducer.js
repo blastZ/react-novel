@@ -1,5 +1,5 @@
 import { GET_CHAPTER_LIST, INIT_STATE, SET_CHAPTER_INDEX, GET_CHAPTER, INIT_CHAPTER,
-         SEARCH_BOOK } from '../actions/app_action';
+         SEARCH_BOOK, SAVE_BOOKSHELF, GET_BOOKSHELF, REMOVE_FROM_BOOKSHELF } from '../actions/app_action';
 
 const initState = {
   chapterList: [],
@@ -15,10 +15,11 @@ const initState = {
     latestChapter: '',
     description: ''
   },
+  bookshelf: [],
 }
 
 const appReducer = (state=initState, action) => {
-  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo } = action;
+  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo, book, bookId } = action;
   switch (action.type) {
     case GET_CHAPTER_LIST: {
       return {
@@ -39,7 +40,7 @@ const appReducer = (state=initState, action) => {
           updateTime: '',
           latestChapter: '',
           description: ''
-        },
+        }
       }
     }
     case SET_CHAPTER_INDEX: {
@@ -68,8 +69,41 @@ const appReducer = (state=initState, action) => {
         resultList
       }
     }
-    default: return state;
+    case SAVE_BOOKSHELF: {
+      const newBookshelf = state.bookshelf.concat([book]);
+      window.localStorage.setItem('bookshelf', JSON.stringify(newBookshelf));
+      return {
+        ...state,
+        bookshelf: newBookshelf
+      }
+    }
+    case GET_BOOKSHELF: {
+      let bookshelf = JSON.parse(window.localStorage.getItem('bookshelf'));
+      if(bookshelf) {
 
+      } else {
+        bookshelf = []
+      }
+      return {
+        ...state,
+        bookshelf
+      }
+    }
+    case REMOVE_FROM_BOOKSHELF: {
+      const newBookshelf = state.bookshelf.reduce((accumulator, book) => {
+        if(book.bookId !== bookId) {
+          return accumulator.concat([book])
+        } else {
+          return accumulator
+        }
+      }, []);
+      window.localStorage.setItem('bookshelf', JSON.stringify(newBookshelf));
+      return {
+        ...state,
+        bookshelf: newBookshelf
+      }
+    }
+    default: return state;
   }
 }
 

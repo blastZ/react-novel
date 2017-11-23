@@ -202,6 +202,7 @@ class ChapterPage extends Component {
           background: `${this.state.bkColor}`,
           color: `${this.state.fontColor}`,
           width: '900px',
+          height: '100vh',
           maxWidth: '100%',
           margin: '0 auto',
           padding: '60px 0px',

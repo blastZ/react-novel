@@ -4,6 +4,9 @@ export const SET_CHAPTER_INDEX = 'SET_CHAPTER_INDEX';
 export const GET_CHAPTER = 'GET_CHAPTER';
 export const INIT_CHAPTER = 'INIT_CHAPTER';
 export const SEARCH_BOOK = 'SEARCH_BOOK';
+export const SAVE_BOOKSHELF = 'SAVE_BOOKSHELF';
+export const GET_BOOKSHELF = 'GET_BOOKSHELF';
+export const REMOVE_FROM_BOOKSHELF = 'REMOVE_FROM_BOOKSHELF';
 
 export const getChapterList = (bookId) => ({
   type: GET_CHAPTER_LIST,
@@ -32,4 +35,18 @@ export const initChapter = () => ({
 export const searchBook = (searchName) => ({
   type: SEARCH_BOOK,
   searchName
+})
+
+export const saveBookshelf = (book) => ({
+  type: SAVE_BOOKSHELF,
+  book
+})
+
+export const getBookshelf = () => ({
+  type: GET_BOOKSHELF
+})
+
+export const removeFromBookshelf = (bookId) => ({
+  type: REMOVE_FROM_BOOKSHELF,
+  bookId
 })
