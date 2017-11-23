@@ -12,6 +12,7 @@ import Drawer from 'material-ui/Drawer';
 import { withStyles } from 'material-ui/styles';
 import Bookshelf from './bookshelf/Bookshelf';
 import TopBar from './components/TopBar';
+import { getBookshelf } from './actions/app_action';
 
 const styles = {
   background: {
@@ -23,6 +24,10 @@ const styles = {
 class App extends Component {
   state = {
     showDrawer: false
+  }
+
+  componentWillMount() {
+    this.props.dispatch(getBookshelf());
   }
 
   toggleDrawer = (showDrawer) => () => {

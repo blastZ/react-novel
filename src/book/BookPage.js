@@ -71,10 +71,13 @@ class BookPage extends Component {
   }
 
   findBook = () => {
+    console.log('haha');
     const bookId = this.props.match.params.bookId;
-    this.props.bookshelf.map((book) => {
-      if(bookId === book.bookId) return true;
-    })
+    for(let i=0; i<this.props.bookshelf.length; i++) {
+      if(this.props.bookshelf[i].bookId === bookId) {
+        return true;
+      }
+    }
     return false;
   }
 
@@ -112,7 +115,7 @@ class BookPage extends Component {
           open={this.state.showOptions}
           onRequestClose={this.closeOptions}
         >
-          {this.findBook
+          {this.state.showOptions && this.findBook()
             ? <MenuItem onClick={this.removeFromBookshelf}>
               <RemoveIcon style={{fontSize: '20px', marginRight: '5px', marginBottom: '2px'}} />移出书架
             </MenuItem>
@@ -152,7 +155,7 @@ class BookPage extends Component {
            label="逆序"
          />
         </div>
-        <div style={{height: '450px', paddingLeft: '20px', display: 'flex', flexDirection: 'column', overflowY: 'auto', flexShrink: '0', overflowX: 'hidden', whiteSpace: 'nowrap'}}>
+        <div style={{paddingLeft: '20px', display: 'flex', flexDirection: 'column', flexShrink: '0', overflowX: 'hidden', whiteSpace: 'nowrap'}}>
           {chapterPageList.length > 0 && chapterPageList[this.state.pageIndex].map((chapter, index) => (
             <a key={chapter.name + chapter.href} onClick={() => this.toChapter(chapter, index)}>{chapter.name}</a>
           ))}
@@ -186,7 +189,8 @@ class BookPage extends Component {
 
 const mapStateToProps = ({ appReducer }) => ({
   chapterList: appReducer.chapterList,
-  bookInfo: appReducer.bookInfo
+  bookInfo: appReducer.bookInfo,
+  bookshelf: appReducer.bookshelf
 })
 
 export default withRouter(connect(mapStateToProps)(BookPage));

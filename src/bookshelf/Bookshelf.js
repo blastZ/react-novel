@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import { getBookshelf } from '../actions/app_action';
 
 const styles = {
 
@@ -13,10 +12,6 @@ const styles = {
 
 class Bookshelf extends Component {
   state = {
-  }
-
-  componentWillMount() {
-    this.props.dispatch(getBookshelf());
   }
 
   toBookPage = (bookId) => {
