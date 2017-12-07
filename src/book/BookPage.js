@@ -71,7 +71,6 @@ class BookPage extends Component {
   }
 
   findBook = () => {
-    console.log('haha');
     const bookId = this.props.match.params.bookId;
     for(let i=0; i<this.props.bookshelf.length; i++) {
       if(this.props.bookshelf[i].bookId === bookId) {

@@ -1,7 +1,7 @@
 import { GET_CHAPTER_LIST, GET_CHAPTER, SEARCH_BOOK, SAVE_BOOKSHELF } from '../actions/app_action';
 
 //const defaultURL = 'http://localhost:5001';
- const defaultURL = 'http://101.132.151.144:5001';
+const defaultURL = 'http://101.132.151.144:5001';
 
 const appMiddleware = store => next => action => {
   const { type, bookId, chapterId, searchName } = action;
