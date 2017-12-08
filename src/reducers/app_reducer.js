@@ -1,9 +1,10 @@
 import { GET_CHAPTER_LIST, INIT_STATE, SET_CHAPTER_INDEX, GET_CHAPTER, INIT_CHAPTER,
-         SEARCH_BOOK, SAVE_BOOKSHELF, GET_BOOKSHELF, REMOVE_FROM_BOOKSHELF } from '../actions/app_action';
+         SEARCH_BOOK, SAVE_BOOKSHELF, GET_BOOKSHELF, REMOVE_FROM_BOOKSHELF, SET_CHAPTER } from '../actions/app_action';
 
 const initState = {
   chapterList: [],
   chapter: [],
+  localChapters: {},
   chapterIndex: 0,
   chapterName: '',
   resultList: [],
@@ -19,7 +20,7 @@ const initState = {
 }
 
 const appReducer = (state=initState, action) => {
-  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo, book, bookId } = action;
+  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo, book, bookId, chapterId } = action;
   switch (action.type) {
     case GET_CHAPTER_LIST: {
       return {
@@ -53,7 +54,21 @@ const appReducer = (state=initState, action) => {
       return {
         ...state,
         chapter,
-        chapterName
+        chapterName,
+        localChapters: {
+          ...state.localChapters,
+          [chapterId]: {
+            chapter,
+            chapterName
+          }
+        }
+      }
+    }
+    case SET_CHAPTER: {
+      return {
+        ...state,
+        chapter: state.localChapters[`${chapterId}`].chapter,
+        chapterName: state.localChapters[`${chapterId}`].chapterName
       }
     }
     case INIT_CHAPTER: {

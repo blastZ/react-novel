@@ -6,7 +6,6 @@ import { setChapterIndex, getChapter, initChapter, getChapterList } from '../act
 import MenuIcon from 'material-ui-icons/Menu';
 import SettingIcon from 'material-ui-icons/Settings';
 import BackIcon from 'react-icons/lib/md/keyboard-arrow-left';
-import HomeIcon from 'react-icons/lib/md/home';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
@@ -26,7 +25,7 @@ class ChapterPage extends Component {
     margin: '15px',
     showSettingView: false,
     showNavView: false,
-    bkColor: 'white',
+    bkColor: '#f3f2d1',
     fontColor: 'black',
   }
 
@@ -45,6 +44,10 @@ class ChapterPage extends Component {
   componentWillMount() {
     if(this.props.chapterList.length === 0) this.props.dispatch(getChapterList(this.props.match.params.bookId));
     this.props.dispatch(getChapter(this.props.match.params.bookId, this.props.match.params.chapterId));
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -158,6 +161,8 @@ class ChapterPage extends Component {
     return (
       <div>
         <NavView
+          bookId={this.props.match.params.bookId}
+          chapterId={this.props.match.params.chapterId}
           chapterIndex={this.props.chapterIndex}
           chapterList={this.props.chapterList}
           getChapter={this.getChapter}
@@ -187,10 +192,11 @@ class ChapterPage extends Component {
           </Toolbar>
         </AppBar>
         <div style={{
+          minHeight: '100vh',
           background: `${this.state.bkColor}`,
           color: `${this.state.fontColor}`,
           overflowY: 'auto',
-          padding: '80px 0px'
+          padding: '80px 0px 60px 0px'
         }}>
           <div style={{
             display: 'flex',
@@ -209,8 +215,8 @@ class ChapterPage extends Component {
             </div>
             {this.props.chapter.length > 0 &&
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '36px', padding: '20px'}}>
-                <Button onClick={this.preChapter}>上一页</Button>
-                <Button onClick={this.nextChapter}>下一页</Button>
+                <Button style={{color: `${this.state.fontColor}`, background: `rgba(210,210,210,0.2)`}} onClick={this.preChapter}>上一页</Button>
+                <Button style={{color: `${this.state.fontColor}`, background: `rgba(210,210,210,0.2)`}} onClick={this.nextChapter}>下一页</Button>
               </div>}
           </div>
         </div>

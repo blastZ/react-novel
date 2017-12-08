@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem } from 'material-ui/List';
 import DecreaseIcon from 'material-ui-icons/Remove';
 import IncreaseIcon from 'material-ui-icons/Add';
 import Typography from 'material-ui/Typography';
@@ -44,7 +44,7 @@ const styles = {
 class ReadSettingView extends Component {
   state = {
     colorList: [
-      {bkColor: 'white', fontColor: 'black'},
+      {bkColor: '#f3f2d1', fontColor: 'black'},
       {bkColor: '#080C10', fontColor: '#84888E'},
         {bkColor: '#225a84', fontColor: 'white'},
       {bkColor: '#48712a', fontColor: 'white'},

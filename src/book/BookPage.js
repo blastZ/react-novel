@@ -10,9 +10,8 @@ import RightIcon from 'react-icons/lib/md/keyboard-arrow-right';
 import LeftIcon from 'react-icons/lib/md/keyboard-arrow-left';
 import MobileStepper from 'material-ui/MobileStepper';
 import Button from 'material-ui/Button';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
-import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 
 class BookPage extends Component {
