@@ -1,5 +1,6 @@
 import { GET_CHAPTER_LIST, INIT_STATE, SET_CHAPTER_INDEX, GET_CHAPTER, INIT_CHAPTER,
-         SEARCH_BOOK, SAVE_BOOKSHELF, GET_BOOKSHELF, REMOVE_FROM_BOOKSHELF, SET_CHAPTER } from '../actions/app_action';
+         SEARCH_BOOK, SAVE_BOOKSHELF, GET_BOOKSHELF, REMOVE_FROM_BOOKSHELF, SET_CHAPTER,
+         PRE_LOAD_CHAPTERS } from '../actions/app_action';
 
 const initState = {
   chapterList: [],
@@ -9,6 +10,7 @@ const initState = {
   chapterName: '',
   resultList: [],
   bookInfo: {
+    id: '',
     url: '',
     name: '',
     author: '',
@@ -20,7 +22,7 @@ const initState = {
 }
 
 const appReducer = (state=initState, action) => {
-  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo, book, bookId, chapterId } = action;
+  const { chapterList, chapterIndex, chapter, chapterName, resultList, bookInfo, book, bookId, chapterId, newState } = action;
   switch (action.type) {
     case GET_CHAPTER_LIST: {
       return {
@@ -32,16 +34,7 @@ const appReducer = (state=initState, action) => {
     case INIT_STATE: {
       return {
         ...state,
-        chapterList: [],
-        chapterIndex: 0,
-        bookInfo: {
-          url: '',
-          name: '',
-          author: '',
-          updateTime: '',
-          latestChapter: '',
-          description: ''
-        }
+        ...newState
       }
     }
     case SET_CHAPTER_INDEX: {
@@ -55,6 +48,18 @@ const appReducer = (state=initState, action) => {
         ...state,
         chapter,
         chapterName,
+        localChapters: {
+          ...state.localChapters,
+          [chapterId]: {
+            chapter,
+            chapterName
+          }
+        }
+      }
+    }
+    case PRE_LOAD_CHAPTERS: {
+      return {
+        ...state,
         localChapters: {
           ...state.localChapters,
           [chapterId]: {

@@ -8,7 +8,7 @@ import RefreshIcon from 'material-ui-icons/Refresh'
 import Divider from 'material-ui/Divider';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getChapterForce } from '../actions/app_action';
+import { getChapterForce, initState } from '../actions/app_action';
 
 const styles = {
   drawerPaper: {
@@ -34,6 +34,27 @@ class NavView extends Component {
     this.props.getChapter(chapter, index);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.open) {
+      const scrollInterval = setInterval(() => {
+        const nav = document.getElementById('chapter-list-nav');
+        if(nav) {
+          nav.scrollTo(0, 420);
+          clearInterval(scrollInterval);
+        }
+      })
+    }
+  }
+
+  toBookPage = () => {
+    this.props.history.push(`/${this.props.bookId}`);
+    this.props.dispatch(initState({
+      chapter: [],
+      chapterIndex: 0,
+      chapterName: ''
+    }))
+  }
+
   render() {
     const { classes, open, closeView, chapterList, chapterIndex, bookId, chapterId } = this.props;
     return (
@@ -50,7 +71,7 @@ class NavView extends Component {
               </ListItemIcon>
               <ListItemText primary='主页' />
             </ListItem>
-            <ListItem button onClick={() => this.props.history.push(`/${bookId}`)}>
+            <ListItem button onClick={this.toBookPage}>
               <ListItemIcon>
                 <ListIcon />
               </ListItemIcon>
@@ -65,7 +86,7 @@ class NavView extends Component {
           </List>
         </div>
         <Divider />
-        <div style={{overflowY: 'auto'}}>
+        <div id="chapter-list-nav" style={{overflowY: 'auto'}}>
           <List className={classes.list}>
           {chapterList.slice(chapterIndex - 10 > 0 ? chapterIndex - 10 : 0, chapterIndex + 11).map((chapter, index) => (
             <ListItem style={{background: `${

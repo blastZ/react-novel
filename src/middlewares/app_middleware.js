@@ -5,7 +5,7 @@ import { GET_CHAPTER_LIST, GET_CHAPTER, SEARCH_BOOK, SAVE_BOOKSHELF, SET_CHAPTER
 const defaultURL = 'http://101.132.151.144:5001';
 
 const appMiddleware = store => next => action => {
-  const { type, bookId, chapterId, searchName } = action;
+  const { type, bookId, chapterId, searchName, preList } = action;
   if(type === GET_CHAPTER_LIST) {
     fetch(`${defaultURL}/book/${bookId}`)
       .then((response) => response.json())
@@ -17,36 +17,24 @@ const appMiddleware = store => next => action => {
         })
       })
   } else if(type === GET_CHAPTER) {
-    store.dispatch({
-      type: 'PRE_LOAD_CHAPTERS',
-      bookId
-    })
     if(store.getState().appReducer.localChapters[`${chapterId}`]) {
       next({
         type: SET_CHAPTER,
         chapterId
       })
     } else {
-      const getChapter = (cb) => {
-        fetch(`${defaultURL}/book/${bookId}/${chapterId}`)
-          .then((response) => response.json())
-          .then((result) => {
-            cb(result);
-          })
-      }
-      const cb = (result) => {
-        if(result.html) {
-          next({
-            type: GET_CHAPTER,
-            chapterName: result.name,
-            chapter: result.html.split('<br>'),
-            chapterId
-          })
-        } else {
-          getChapter(cb);
-        }
-      }
-      getChapter(cb);
+      fetch(`${defaultURL}/book/${bookId}/${chapterId}`)
+        .then((response) => response.json())
+        .then((result) => {
+          if(result.html) {
+            next({
+              type: GET_CHAPTER,
+              chapterName: result.name,
+              chapter: result.html.split('<br>'),
+              chapterId
+            })
+          }
+        })
     }
   } else if(type === GET_CHAPTER_FORCE) {
     const getChapter = (cb) => {
@@ -79,19 +67,22 @@ const appMiddleware = store => next => action => {
         })
       })
   } else if(type === PRE_LOAD_CHAPTERS) {
-    // const appReducer = store.getState().appReducer;
-    // const { localChapters, chapterIndex, chapterList } = appReducer;
-    // if(chapterList.length > 0) {
-    //   for(let i=1; i<=10; i++) {
-    //     if(!localChapters[`${chapterList[chapterIndex + i].href}`]) {
-    //       store.dispatch({
-    //         type: GET_CHAPTER_FORCE,
-    //         bookId,
-    //         chapterId: chapterList[chapterIndex + i].href
-    //       })
-    //     }
-    //   }
-    // }
+    preList.map((chapterId) => {
+      if(!store.getState().appReducer.localChapters[`${chapterId}`]) {
+        fetch(`${defaultURL}/book/${bookId}/${chapterId}`)
+          .then((response) => response.json())
+          .then((result) => {
+            if(result.html) {
+              next({
+                type: PRE_LOAD_CHAPTERS,
+                chapterName: result.name,
+                chapter: result.html.split('<br>'),
+                chapterId
+              })
+            }
+          })
+      }
+    })
   } else {
     next(action)
   }

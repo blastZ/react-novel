@@ -16,8 +16,9 @@ export const getChapterList = (bookId) => ({
   bookId
 })
 
-export const initState = () => ({
-  type: INIT_STATE
+export const initState = (newState) => ({
+  type: INIT_STATE,
+  newState
 })
 
 export const setChapterIndex = (index) => ({
@@ -63,4 +64,10 @@ export const getBookshelf = () => ({
 export const removeFromBookshelf = (bookId) => ({
   type: REMOVE_FROM_BOOKSHELF,
   bookId
+})
+
+export const preloadChapters = (bookId, preList) => ({
+  type: PRE_LOAD_CHAPTERS,
+  bookId,
+  preList
 })

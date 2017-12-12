@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
-import { setChapterIndex, getChapter, initChapter, getChapterList } from '../actions/app_action';
+import { setChapterIndex, getChapter, initChapter, getChapterList, preloadChapters } from '../actions/app_action';
 import MenuIcon from 'material-ui-icons/Menu';
 import SettingIcon from 'material-ui-icons/Settings';
 import BackIcon from 'react-icons/lib/md/keyboard-arrow-left';
@@ -74,11 +74,16 @@ class ChapterPage extends Component {
   }
 
   nextChapter = () => {
-    this.props.history.push(`/${this.props.match.params.bookId}/${this.props.chapterList[this.props.chapterIndex + 1].href}`);
+    const bookId = this.props.match.params.bookId
+    const { chapterList, chapterIndex } = this.props;
+    //get chapter
+    this.props.history.push(`/${bookId}/${chapterList[chapterIndex + 1].href}`);
     this.props.dispatch(initChapter());
-    this.props.dispatch(getChapter(this.props.match.params.bookId, this.props.chapterList[this.props.chapterIndex + 1].href));
-    this.props.dispatch(setChapterIndex(this.props.chapterIndex + 1));
+    this.props.dispatch(getChapter(bookId, chapterList[chapterIndex + 1].href));
+    this.props.dispatch(setChapterIndex(chapterIndex + 1));
     window.scrollTo(0, 0);
+    //preload chapter
+    this.props.dispatch(preloadChapters(bookId, chapterList.slice(chapterIndex + 2, chapterIndex + 7).map((chapter) => chapter.href)));
   }
 
   changeBackground = (color) => {

@@ -23,13 +23,33 @@ class BookPage extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(initState());
-    this.props.dispatch(getChapterList(this.props.match.params.bookId));
+    const bookId = this.props.match.params.bookId;
+    if(this.props.bookInfo && this.props.bookInfo.id === bookId) {
+    } else {
+      this.props.dispatch(initState({
+        chapterList: [],
+        chapterIndex: 0,
+        bookInfo: {
+          id: '',
+          url: '',
+          name: '',
+          author: '',
+          updateTime: '',
+          latestChapter: '',
+          description: ''
+        }
+      }));
+      this.props.dispatch(getChapterList(bookId));
+    }
   }
 
   toChapter = (chapter, index) => {
-    this.props.dispatch(setChapterIndex(index));
+    this.props.dispatch(setChapterIndex(this.getIndex(chapter.href)));
     this.props.history.push(`/${this.props.match.params.bookId}/${chapter.href}`);
+  }
+
+  getIndex(href) {
+    return this.props.chapterList.map((chapter) => chapter.href).indexOf(href);
   }
 
   goBack = () => {
@@ -113,7 +133,7 @@ class BookPage extends Component {
           open={this.state.showOptions}
           onRequestClose={this.closeOptions}
         >
-          {this.state.showOptions && this.findBook()
+          {this.findBook()
             ? <MenuItem onClick={this.removeFromBookshelf}>
               <RemoveIcon style={{fontSize: '20px', marginRight: '5px', marginBottom: '2px'}} />移出书架
             </MenuItem>
