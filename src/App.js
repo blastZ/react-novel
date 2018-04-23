@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter, Route, Switch } from 'react-router-dom';
-import HomePage from './home/HomePage';
-import BookPage from './book/BookPage';
-import ChapterPage from './book/ChapterPage';
+import HomePage from './Home/HomePage';
+import BookPage from './Book/BookPage';
+import ChapterPage from './Book/ChapterPage';
 import { connect } from 'react-redux';
-import SearchPage from './search/SearchPage';
+import SearchPage from './Search/SearchPage';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import SearchIcon from 'react-icons/lib/md/search';
 import BookIcon from 'react-icons/lib/md/book';
 import Drawer from 'material-ui/Drawer';
 import { withStyles } from 'material-ui/styles';
-import Bookshelf from './bookshelf/Bookshelf';
+import Bookshelf from './Bookshelf/Bookshelf';
 import TopBar from './components/TopBar';
 import { getBookshelf } from './actions/app_action';
 

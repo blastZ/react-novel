@@ -1,8 +1,8 @@
 import { GET_CHAPTER_LIST, GET_CHAPTER, SEARCH_BOOK, SAVE_BOOKSHELF, SET_CHAPTER,
          GET_CHAPTER_FORCE, PRE_LOAD_CHAPTERS } from '../actions/app_action';
 
-//const defaultURL = 'http://localhost:5001';
-const defaultURL = 'http://101.132.151.144:5001';
+const defaultURL = 'http://localhost:5001';
+//const defaultURL = 'http://101.132.151.144:5001';
 
 const appMiddleware = store => next => action => {
   const { type, bookId, chapterId, searchName, preList } = action;
